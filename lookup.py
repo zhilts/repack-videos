@@ -8,7 +8,7 @@ def include(filepath, exclude):
     for exclusion in exclude:
         if filepath.startswith(exclusion):
             return False
-    return re.compile(r".*(\.avi|\.mov|.mp4|.mpg)$", re.IGNORECASE).match(filepath)
+    return re.compile(r".*(\.avi|\.mov|.mp4|.mpg|.mkv)$", re.IGNORECASE).match(filepath)
 
 
 @wrap_result(tuple)
