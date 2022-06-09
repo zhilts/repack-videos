@@ -9,8 +9,8 @@ def transform(file_in, file_out):
         "-i", file_in,
         "-y",
         "-vcodec", "libx265",
-        "-acodec", "mp2",
-        # "-preset", "slower",
+        "-acodec", "aac",
+        # "-preset", "ultrafast",
         # "-crf", "24",
         file_out
 
