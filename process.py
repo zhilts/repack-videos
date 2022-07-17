@@ -15,17 +15,13 @@ OUT_DIR_NAME = "ff_out"
 
 
 def get_dest_filename(filepath, base_path):
-    relative_path = os.path.relpath(filepath, base_path)
+    filepath_no_ext = "".join(os.path.splitext(filepath)[:-1])
+    relative_path = os.path.relpath(filepath_no_ext, base_path)
     output_path = os.path.join(base_path, OUT_DIR_NAME, relative_path + ".mp4")
     if os.path.exists(output_path):
         raise FileExistsError
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     return output_path
-
-
-def update_extension(filepath):
-    pre, _ = os.path.splitext(filepath)
-    os.rename(filepath, pre + ".mp4")
 
 
 def process_one(index, count, filepath, base_path):
