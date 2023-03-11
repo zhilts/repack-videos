@@ -9,6 +9,7 @@ from transform import transform
 from utils import copy_date
 
 parser = argparse.ArgumentParser(description="Reduce video size")
+parser.add_argument('-c', '--compatible', action='store_true', help="Use h.264 instead of h.265")
 args = parser.parse_args()
 
 OUT_DIR_NAME = "ff_out"
@@ -24,14 +25,14 @@ def get_dest_filename(filepath, base_path):
     return output_path
 
 
-def process_one(index, count, filepath, base_path):
+def process_one(index, count, filepath, base_path, compatible):
     print("\n" * 3 + "-" * 80)
     print(f"NEXT FILE {index + 1}/{count}: {filepath}")
     out_filename = None
     try:
         out_filename = get_dest_filename(filepath, base_path)
         copy_date(filepath, out_filename)
-        transform(filepath, out_filename)
+        transform(filepath, out_filename, h264=compatible)
     except FileExistsError:
         print(f"File {filepath} exists in output path. Skipping")
     except BaseException as ex:
@@ -45,7 +46,7 @@ def main():
     files = sorted(get_files(base_path, [out_out]))
     count = len(files)
     for index, file in enumerate(files):
-        process_one(index, count, file, base_path)
+        process_one(index, count, file, base_path, args.compatible)
 
 
 if __name__ == "__main__":
