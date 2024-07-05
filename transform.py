@@ -11,8 +11,14 @@ def transform(file_in, file_out, h264):
         "-y",
         "-vcodec", "libx264" if h264 else "libx265",
         "-acodec", "aac",
-        # "-preset", "ultrafast",
-        # "-crf", "24",
+        "-movflags", "+faststart",
         file_out
-
+    ])
+    subprocess.run([
+        "exiftool",
+        "-tagsfromfile",
+        file_in,
+        "-all:all",
+        "-overwrite_original",
+        file_out
     ])
